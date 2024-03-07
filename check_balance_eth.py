@@ -7,7 +7,7 @@ import random
 # TODO: input your Ethereum RPC here.
 rpc_endpoint = ''
 
-# Wallet address that we will check the balance for
+# Wallet address (0x format) that we will check the balance for
 # TODO: Input your wallet address
 wallet_address = ''
 
