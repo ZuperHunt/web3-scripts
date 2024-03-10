@@ -1,6 +1,4 @@
-import time
 import requests
-import random
 
 def get_erc_balance(wallet_address, rpc_endpoint):
 
