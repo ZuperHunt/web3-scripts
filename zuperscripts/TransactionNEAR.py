@@ -1,4 +1,6 @@
 import requests
+import random
+import time
 from zuperscripts.TransactionERC import TransactionERC
 
 class TransactionNear(TransactionERC):
@@ -59,6 +61,9 @@ class TransactionNear(TransactionERC):
             None
         """
 
+        self.tx_counter += 1
+        print(f"NEAR Transaction no. {self.tx_counter} \n")
+
         try:
             balance = self.get_balance()
 
@@ -69,3 +74,9 @@ class TransactionNear(TransactionERC):
                 print(f'Failed to retrieve balance for account: {self.account_id}')
         except Exception as e:
             print("An error occurred:", e)
+
+        random_delay = random.randint(60, 90)
+        print(f"Waiting for {random_delay} seconds...")
+        print("=======================================================")
+
+        time.sleep(random_delay)
