@@ -58,11 +58,13 @@ class TransactionNear(TransactionERC):
         Returns:
             None
         """
+        try:
+            balance = self.get_balance()
 
-        balance = self.get_balance()
-
-        if balance is not None:
-            print(f'Account ID: {self.wallet_address}')
-            print(f'Balance: {balance} NEAR')
-        else:
-            print(f'Failed to retrieve balance for account: {self.account_id}')
+            if balance is not None:
+                print(f'Account ID: {self.wallet_address}')
+                print(f'Balance: {balance} NEAR')
+            else:
+                print(f'Failed to retrieve balance for account: {self.account_id}')
+        except Exception as e:
+            print("An error occurred:", e)

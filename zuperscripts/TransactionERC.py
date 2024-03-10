@@ -53,9 +53,11 @@ class TransactionERC:
         Returns:
             None
         """
+        try:
+            balance_wei = self.get_balance()
+            balance_in_ether = balance_wei / 1e18
 
-        balance_wei = self.get_balance()
-        balance_in_ether = balance_wei / 1e18
-
-        print(f'Wallet Address: {self.wallet_address}')
-        print(f'Balance: {balance_in_ether} ETH')
+            print(f'Wallet Address: {self.wallet_address}')
+            print(f'Balance: {balance_in_ether} ETH')
+        except Exception as e:
+            print("An error occurred:", e)
