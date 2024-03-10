@@ -43,6 +43,7 @@ class TransactionERC:
         return balance_wei
 
     def check_balance(self):
+
         """
         Check the balance of the wallet address
 

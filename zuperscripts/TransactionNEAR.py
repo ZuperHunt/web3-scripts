@@ -5,7 +5,7 @@ class TransactionNear(TransactionERC):
     def __init__(self, account_id, rpc_endpoint):
 
         """
-        Transaction class to interact with NEAR Mainnet Blockchain
+        Transaction class to interact with NEAR Mainnet and Testnet Blockchain
 
         Attributes:
             wallet_address (str): Account ID that we will check the balance for
