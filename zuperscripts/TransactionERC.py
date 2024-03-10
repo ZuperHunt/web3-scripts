@@ -2,16 +2,29 @@ import requests
 
 class TransactionERC:
     def __init__(self, wallet_address, rpc_endpoint):
-        self.wallet_address = wallet_address
-        self.rpc_endpoint = rpc_endpoint
 
-    def get_balance(self):
         """
-        Get the balance of the wallet address
+        Transaction class to interact with Ethereum Blockchain
 
         Attributes:
             wallet_address (str): Wallet address that we will check the balance for
             rpc_endpoint (str): RPC endpoint
+
+        Returns:
+            None
+        """
+
+        self.wallet_address = wallet_address
+        self.rpc_endpoint = rpc_endpoint
+        self.tx_counter = 0
+
+    def get_balance(self):
+
+        """
+        Get the balance of the wallet address
+
+        Arguments:
+            None
 
         Returns:
             balance_wei (int): The corresponding balance of the given address in Wei format
@@ -33,14 +46,14 @@ class TransactionERC:
         """
         Check the balance of the wallet address
 
-        Attributes:
+        Arguments:
             None
 
         Returns:
             None
         """
 
-        balance_wei = self.get_erc_balance()
+        balance_wei = self.get_balance()
         balance_in_ether = balance_wei / 1e18
 
         print(f'Wallet Address: {self.wallet_address}')
