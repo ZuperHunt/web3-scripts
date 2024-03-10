@@ -1,3 +1,4 @@
+import argparse
 import threading
 import random
 import time
@@ -86,22 +87,22 @@ def near_testnet_threading(account_id, rpc_endpoint):
         time.sleep(random_delay)
 
 def main():
-    # Ethereum Configuration
-    ethereum_rpc_endpoint = 'https://eth1.lava.build/lava-referer-630567c6-c700-4955-b1d0-f512e7364026/'
-    ethereum_wallet_address = '0x0000004C4F555675F3043F83b653834359e671c3'
+    # Define Parsing Arguments
+    parser = argparse.ArgumentParser(description='Run transactions.')
 
-    # NEAR Mainnet Configuration
-    near_mainnet_rpc_endpoint = 'https://near.lava.build/lava-referer-630567c6-c700-4955-b1d0-f512e7364026/'
-    near_mainnet_account_id = 'lavaman.near'
+    parser.add_argument('--ethereum_rpc_endpoint', required=True, help='Ethereum RPC endpoint')
+    parser.add_argument('--ethereum_wallet_address', required=True, help='Ethereum wallet address')
+    parser.add_argument('--near_mainnet_rpc_endpoint', required=True, help='NEAR Mainnet RPC endpoint')
+    parser.add_argument('--near_mainnet_account_id', required=True, help='NEAR Mainnet account ID')
+    parser.add_argument('--near_testnet_rpc_endpoint', required=True, help='NEAR Testnet RPC endpoint')
+    parser.add_argument('--near_testnet_account_id', required=True, help='NEAR Testnet account ID')
 
-    # NEAR Testnet Configuration
-    near_testnet_rpc_endpoint = 'https://near-testnet.lava.build/lava-referer-630567c6-c700-4955-b1d0-f512e7364026/'
-    near_testnet_account_id = 'lavaman.testnet'
+    args = parser.parse_args()
 
     # Building Threads
-    erc_thread = threading.Thread(target=erc_threading, args=(ethereum_wallet_address, ethereum_rpc_endpoint))
-    near_mainnet_thread = threading.Thread(target=near_mainnet_threading, args=(near_mainnet_account_id, near_mainnet_rpc_endpoint))
-    near_testnet_thread = threading.Thread(target=near_testnet_threading, args=(near_testnet_account_id, near_testnet_rpc_endpoint))
+    erc_thread = threading.Thread(target=erc_threading, args=(args.ethereum_wallet_address, args.ethereum_rpc_endpoint))
+    near_mainnet_thread = threading.Thread(target=near_mainnet_threading, args=(args.near_mainnet_account_id, args.near_mainnet_rpc_endpoint))
+    near_testnet_thread = threading.Thread(target=near_testnet_threading, args=(args.near_testnet_account_id, args.near_testnet_rpc_endpoint))
 
     # Starting Threads
     erc_thread.start()
