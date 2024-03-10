@@ -1,5 +1,5 @@
 import requests
-from zuperscripts.TransactionERC import TransactionERC
+from TransactionERC import TransactionERC
 
 class TransactionNear(TransactionERC):
     def __init__(self, account_id, rpc_endpoint):
