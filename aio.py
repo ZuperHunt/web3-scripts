@@ -65,6 +65,10 @@ def main():
     starknet_rpc_endpoint = 'https://rpc.starknet.lava.build/lava-referer-b94ae174-dcf4-49b0-a9ca-8174ae86a1a4/'  # TODO: fill with your Starknet RPC
     starknet_counter = 0
 
+    # Starknet testnet configuration
+    starknet_testnet_rpc_endpoint = 'https://rpc.starknet-testnet.lava.build/lava-referer-b94ae174-dcf4-49b0-a9ca-8174ae86a1a4/'  # TODO: fill with your Starknet testnet RPC
+    starknet_testnet_counter = 0
+
     # NEAR Mainnet Configuration
     near_mainnet_rpc_endpoint = 'https://near.lava.build/lava-referer-630567c6-c700-4955-b1d0-f512e7364026/'
     near_mainnet_account_id = 'lavaman.near'
@@ -91,6 +95,15 @@ def main():
 
         try:
             check_starknet_txs(starknet_rpc_endpoint)
+        except Exception as e:
+            print("An error occurred:", e)
+        
+        # Starknet testnet
+        starknet_testnet_counter += 1
+        print(f"Starknet testnet counter no. {starknet_testnet_counter}")
+
+        try:
+            check_starknet_txs(starknet_testnet_rpc_endpoint)
         except Exception as e:
             print("An error occurred:", e)
 
