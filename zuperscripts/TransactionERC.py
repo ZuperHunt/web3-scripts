@@ -18,7 +18,6 @@ class TransactionERC:
 
         self.wallet_address = wallet_address
         self.rpc_endpoint = rpc_endpoint
-        self.tx_counter = 0
 
     def get_balance(self):
 
@@ -56,9 +55,6 @@ class TransactionERC:
             None
         """
 
-        self.tx_counter += 1
-        print(f"Ethereum Transaction no. {self.tx_counter} \n")
-
         try:
             balance_wei = self.get_balance()
             balance_in_ether = balance_wei / 1e18
@@ -67,9 +63,3 @@ class TransactionERC:
             print(f'Balance: {balance_in_ether} ETH')
         except Exception as e:
             print("An error occurred:", e)
-
-        random_delay = random.randint(60, 90)
-        print(f"Waiting for {random_delay} seconds...")
-        print("=======================================================")
-
-        time.sleep(random_delay)
