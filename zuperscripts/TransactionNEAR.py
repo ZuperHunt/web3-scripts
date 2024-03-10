@@ -1,6 +1,4 @@
 import requests
-import random
-import time
 from zuperscripts.TransactionERC import TransactionERC
 
 class TransactionNear(TransactionERC):

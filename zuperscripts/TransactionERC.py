@@ -1,6 +1,4 @@
 import requests
-import random
-import time
 
 class TransactionERC:
     def __init__(self, wallet_address, rpc_endpoint):
