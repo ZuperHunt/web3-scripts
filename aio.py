@@ -17,7 +17,7 @@ def get_ethereum_balance(wallet_address, rpc_endpoint):
 def check_ethereum_balance(wallet_address, rpc_endpoint):
     balance = get_ethereum_balance(wallet_address, rpc_endpoint)
     print(f'Wallet Address: {wallet_address}')
-    print(f'Balance: {balance} ETH')
+    print(f'Balance: {balance} ETH \n')
 
 def get_starknet_block(rpc_endpoint):
     payload = {"jsonrpc":"2.0","method":"starknet_getBlockTransactionCount","params":["latest"],"id":1}
@@ -27,7 +27,7 @@ def get_starknet_block(rpc_endpoint):
 
 def check_starknet_txs(rpc_endpoint):
     txs = get_starknet_block(rpc_endpoint)
-    print(f'Latest block: {txs} txs')
+    print(f'Latest block: {txs} txs \n')
 
 def get_near_balance(account_id, rpc_endpoint):
     payload = {
@@ -51,7 +51,7 @@ def check_near_balance(account_id, rpc_endpoint):
     balance = get_near_balance(account_id, rpc_endpoint)
     if balance is not None:
         print(f'Account ID: {account_id}')
-        print(f'Balance: {balance} NEAR')
+        print(f'Balance: {balance} NEAR \n')
     else:
         print(f'Failed to retrieve balance for account: {account_id}')
 
@@ -82,7 +82,7 @@ def main():
     while True:
         # Ethereum
         ethereum_tx_counter += 1
-        print(f"Ethereum Transaction no. {ethereum_tx_counter} \n")
+        print(f"Ethereum Transaction no. {ethereum_tx_counter}")
 
         try:
             check_ethereum_balance(ethereum_wallet_address, ethereum_rpc_endpoint)
@@ -109,7 +109,7 @@ def main():
 
         # NEAR Mainnet
         near_mainnet_tx_counter += 1
-        print(f"NEAR Mainnet Transaction no. {near_mainnet_tx_counter} \n")
+        print(f"NEAR Mainnet Transaction no. {near_mainnet_tx_counter}")
 
         try:
             check_near_balance(near_mainnet_account_id, near_mainnet_rpc_endpoint)
@@ -118,7 +118,7 @@ def main():
 
         # NEAR Testnet
         near_testnet_tx_counter += 1
-        print(f"NEAR Testnet Transaction no. {near_testnet_tx_counter}\n")
+        print(f"NEAR Testnet Transaction no. {near_testnet_tx_counter}")
 
         try:
             check_near_balance(near_testnet_account_id, near_testnet_rpc_endpoint)
