@@ -52,7 +52,7 @@ class TransactionNear(TransactionERC):
     def check_balance(self):
 
         """
-        Check the balance of the account ID
+        Check the balance of the account ID, print the balance and, wait for a random time
 
         Arguments:
             None

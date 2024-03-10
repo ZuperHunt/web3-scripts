@@ -47,7 +47,7 @@ class TransactionERC:
     def check_balance(self):
 
         """
-        Check the balance of the wallet address
+        Check the balance of the wallet address, print the balance and, wait for a random time
 
         Arguments:
             None
