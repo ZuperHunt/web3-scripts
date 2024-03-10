@@ -1,6 +1,6 @@
 import requests
 
-class Transaction:
+class TransactionERC:
     def __init__(self, wallet_address, rpc_endpoint):
         self.wallet_address = wallet_address
         self.rpc_endpoint = rpc_endpoint
