@@ -87,29 +87,46 @@ def near_testnet_threading(account_id, rpc_endpoint):
         time.sleep(random_delay)
 
 def main():
-    # Define Parsing Arguments
+    # Define Parser
     parser = argparse.ArgumentParser(description='Run transactions.')
 
-    parser.add_argument('--ethereum_rpc_endpoint', required=True, help='Ethereum RPC endpoint')
-    parser.add_argument('--ethereum_wallet_address', required=True, help='Ethereum wallet address')
-    parser.add_argument('--near_mainnet_rpc_endpoint', required=True, help='NEAR Mainnet RPC endpoint')
-    parser.add_argument('--near_mainnet_account_id', required=True, help='NEAR Mainnet account ID')
-    parser.add_argument('--near_testnet_rpc_endpoint', required=True, help='NEAR Testnet RPC endpoint')
-    parser.add_argument('--near_testnet_account_id', required=True, help='NEAR Testnet account ID')
+    # Add Arguments
+    parser.add_argument('--ethereum_rpc_endpoint', help='Ethereum RPC endpoint')
+    parser.add_argument('--ethereum_wallet_address', help='Ethereum wallet address')
+    parser.add_argument('--near_mainnet_rpc_endpoint', help='NEAR Mainnet RPC endpoint')
+    parser.add_argument('--near_mainnet_account_id', help='NEAR Mainnet account ID')
+    parser.add_argument('--near_testnet_rpc_endpoint', help='NEAR Testnet RPC endpoint')
+    parser.add_argument('--near_testnet_account_id', help='NEAR Testnet account ID')
 
+    # Parse Arguments
     args = parser.parse_args()
 
-    # Building Threads
-    erc_thread = threading.Thread(target=erc_threading, args=(args.ethereum_wallet_address, args.ethereum_rpc_endpoint))
-    near_mainnet_thread = threading.Thread(target=near_mainnet_threading, args=(args.near_mainnet_account_id, args.near_mainnet_rpc_endpoint))
-    near_testnet_thread = threading.Thread(target=near_testnet_threading, args=(args.near_testnet_account_id, args.near_testnet_rpc_endpoint))
+    # Start Ethereum Threads if RPC endpoint and wallet address are provided
+    if args.ethereum_rpc_endpoint and args.ethereum_wallet_address:
+        erc_thread = threading.Thread(target=erc_threading, args=(args.ethereum_wallet_address, args.ethereum_rpc_endpoint))
+        erc_thread.start()
+        time.sleep(1)
+    else:
+        print("Please provide Ethereum RPC endpoint and wallet address")
+        print("=======================================================")
 
-    # Starting Threads
-    erc_thread.start()
-    time.sleep(2)
-    near_mainnet_thread.start()
-    time.sleep(2)
-    near_testnet_thread.start()
+    # Start NEAR Mainnet Threads if RPC endpoint and account ID are provided
+    if args.near_mainnet_rpc_endpoint and args.near_mainnet_account_id:
+        near_mainnet_thread = threading.Thread(target=near_mainnet_threading, args=(args.near_mainnet_account_id, args.near_mainnet_rpc_endpoint))
+        near_mainnet_thread.start()
+        time.sleep(1)
+    else:
+        print("Please provide NEAR Mainnet RPC endpoint and account ID")
+        print("=======================================================")
+
+    # Start NEAR Testnet Threads if RPC endpoint and account ID are provided
+    if args.near_testnet_rpc_endpoint and args.near_testnet_account_id:
+        near_testnet_thread = threading.Thread(target=near_testnet_threading, args=(args.near_testnet_account_id, args.near_testnet_rpc_endpoint))
+        near_testnet_thread.start()
+        time.sleep(1)
+    else:
+        print("Please provide NEAR Testnet RPC endpoint and account ID")
+        print("=======================================================")
 
 if __name__ == "__main__":
     main()
