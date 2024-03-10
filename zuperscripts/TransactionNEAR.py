@@ -58,6 +58,7 @@ class TransactionNear(TransactionERC):
         Returns:
             None
         """
+
         try:
             balance = self.get_balance()
 

@@ -53,6 +53,7 @@ class TransactionERC:
         Returns:
             None
         """
+
         try:
             balance_wei = self.get_balance()
             balance_in_ether = balance_wei / 1e18
