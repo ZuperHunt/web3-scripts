@@ -18,6 +18,8 @@ python main.py
 --near_mainnet_account_id <your account id> 
 --near_testnet_rpc_endpoint <your rpc> 
 --near_testnet_account_id <your account id>
+
+// alternatively you can use pyhton3 to run the script
 ```
 
 ## Installation (Package Usage)
