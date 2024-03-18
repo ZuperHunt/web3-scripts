@@ -4,6 +4,7 @@ import random
 import time
 from TransactionERC import TransactionERC
 from TransactionNEAR import TransactionNear
+from TransactionSTARK import TransactionSTARK
 
 def erc_threading(wallet_address, rpc_endpoint):
 
@@ -86,6 +87,58 @@ def near_testnet_threading(account_id, rpc_endpoint):
 
         time.sleep(random_delay)
 
+def stark_mainnet_threading(rpc_endpoint):
+
+    """
+    Function to Define Starknet Transaction Thread Doing
+
+    Arguments:
+        rpc_endpoint (str): RPC endpoint
+
+    Returns:
+        None
+    """
+
+    stark_mainnet_tx_counter = 0
+
+    while True:
+        stark_mainnet_tx_counter += 1
+        print(f"Starknet Mainnet Transaction no. {stark_mainnet_tx_counter} \n")
+
+        TransactionSTARK(rpc_endpoint).check_txs()
+
+        random_delay = random.randint(60, 90)
+        print(f"Waiting for {random_delay} seconds...")
+        print("=======================================================")
+
+        time.sleep(random_delay)
+
+def stark_testnet_threading(rpc_endpoint):
+
+    """
+    Function to Define Starknet Transaction Thread Doing
+
+    Arguments:
+        rpc_endpoint (str): RPC endpoint
+
+    Returns:
+        None
+    """
+
+    stark_testnet_tx_counter = 0
+
+    while True:
+        stark_testnet_tx_counter += 1
+        print(f"Starknet Testnet Transaction no. {stark_testnet_tx_counter} \n")
+
+        TransactionSTARK(rpc_endpoint).check_txs()
+
+        random_delay = random.randint(60, 90)
+        print(f"Waiting for {random_delay} seconds...")
+        print("=======================================================")
+
+        time.sleep(random_delay)
+
 def main():
     # Define Parser
     parser = argparse.ArgumentParser(description='Run transactions.')
@@ -97,6 +150,8 @@ def main():
     parser.add_argument('--near_mainnet_account_id', help='NEAR Mainnet account ID')
     parser.add_argument('--near_testnet_rpc_endpoint', help='NEAR Testnet RPC endpoint')
     parser.add_argument('--near_testnet_account_id', help='NEAR Testnet account ID')
+    parser.add_argument('--starknet_mainnet_rpc_endpoint', help='Starknet Mainnet RPC endpoint')
+    parser.add_argument('--starknet_testnet_rpc_endpoint', help='Starknet Testnet RPC endpoint')
 
     # Parse Arguments
     args = parser.parse_args()
@@ -126,6 +181,24 @@ def main():
         time.sleep(1)
     else:
         print("Please provide NEAR Testnet RPC endpoint and account ID")
+        print("=======================================================")
+
+    # Start Starknet Mainnet Threads if RPC endpoint is provided
+    if args.starknet_mainnet_rpc_endpoint:
+        stark_mainnet_thread = threading.Thread(target=stark_mainnet_threading, args=(args.starknet_mainnet_rpc_endpoint,))
+        stark_mainnet_thread.start()
+        time.sleep(1)
+    else:
+        print("Please provide Starknet Mainnet RPC endpoint")
+        print("=======================================================")
+
+    # Start Starknet Testnet Threads if RPC endpoint is provided
+    if args.starknet_testnet_rpc_endpoint:
+        stark_testnet_thread = threading.Thread(target=stark_testnet_threading, args=(args.starknet_testnet_rpc_endpoint,))
+        stark_testnet_thread.start()
+        time.sleep(1)
+    else:
+        print("Please provide Starknet Testnet Starknet endpoint")
         print("=======================================================")
 
 if __name__ == "__main__":
