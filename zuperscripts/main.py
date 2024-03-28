@@ -206,6 +206,7 @@ def main():
     if args.starknet_mainnet_rpc_endpoint and args.starknet_mainnet_wallet_address:
         stark_mainnet_thread = threading.Thread(target=stark_mainnet_threading, args=(args.starknet_mainnet_wallet_address, args.starknet_mainnet_rpc_endpoint, "MAINNET"))
         stark_mainnet_thread.start()
+        time.sleep(1)
     else:
         print("Please provide Starknet Mainnet RPC endpoint and wallet address")
         print("=======================================================")
@@ -214,6 +215,7 @@ def main():
     if args.starknet_testnet_rpc_endpoint and args.starknet_testnet_wallet_address:
         stark_testnet_thread = threading.Thread(target=stark_testnet_threading, args=(args.starknet_testnet_wallet_address, args.starknet_testnet_rpc_endpoint, "SEPOLIA_INTEGRATION"))
         stark_testnet_thread.start()
+        time.sleep(1)
     else:
         print("Please provide Starknet Testnet RPC endpoint and wallet address")
         print("=======================================================")
