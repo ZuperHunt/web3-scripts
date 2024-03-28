@@ -4,8 +4,16 @@ A general collection of web3 scripts
 
 ## Installation (Nuyul Lava Network Usage)
 
+first, you download the repository and move to right directory using the following command:
+
 ```bash
 git clone https://github.com/nmluthfi/web3-scripts.git && cd web3-scripts/zuperscripts
+````
+
+then, you need to install the required packages using the following command:
+
+```bash
+sudo apt install -y libgmp3-dev && pip install starknet-py
 ````
 
 after that, you can run the script using the following command:
@@ -19,7 +27,9 @@ python main.py
 --near_testnet_rpc_endpoint <your rpc> 
 --near_testnet_account_id <your account id> 
 --starknet_mainnet_rpc_endpoint <your rpc> 
+--starknet_mainnet_wallet_address <your address>
 --starknet_testnet_rpc_endpoint <your rpc>
+--starknet_testnet_wallet_address <your address>
 
 # alternatively you can use pyhton3 to run the script
 ```
