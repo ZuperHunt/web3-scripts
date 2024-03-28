@@ -27,7 +27,7 @@ def erc_threading(wallet_address, rpc_endpoint):
 
         TransactionERC(wallet_address, rpc_endpoint).check_balance()
 
-        random_delay = random.randint(60, 90)
+        random_delay = random.randint(5, 90)
         print(f"Waiting for {random_delay} seconds...")
         print("=======================================================")
 
@@ -54,7 +54,7 @@ def near_mainnet_threading(account_id, rpc_endpoint):
 
         TransactionNear(account_id, rpc_endpoint).check_balance()
 
-        random_delay = random.randint(60, 90)
+        random_delay = random.randint(5, 90)
         print(f"Waiting for {random_delay} seconds...")
         print("=======================================================")
 
@@ -81,7 +81,7 @@ def near_testnet_threading(account_id, rpc_endpoint):
 
         TransactionNear(account_id, rpc_endpoint).check_balance()
 
-        random_delay = random.randint(60, 90)
+        random_delay = random.randint(5, 90)
         print(f"Waiting for {random_delay} seconds...")
         print("=======================================================")
 
@@ -101,12 +101,25 @@ def stark_mainnet_threading(wallet_address, rpc_endpoint, network_type):
         None
     """
 
-    counter = 0
+    starknet_mainnet_tx_counter = 0
 
     while True:
-        counter += 1
+        starknet_mainnet_tx_counter += 1
+        print(f"Starknet {network_type} Transaction no. {starknet_mainnet_tx_counter} \n")
 
-        TransactionSTARK(wallet_address, rpc_endpoint, network_type, counter).main()
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type).check_balance()
+
+        print('\n')
+        time.sleep(3)
+
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type).check_block()
+
+        random_delay = random.randint(5, 60)
+
+        print(f"Waiting for {random_delay} seconds...")
+        print("=======================================================")
+
+        time.sleep(random_delay)
 
 def stark_testnet_threading(wallet_address, rpc_endpoint, network_type):
 
@@ -122,13 +135,25 @@ def stark_testnet_threading(wallet_address, rpc_endpoint, network_type):
         None
     """
 
-    counter = 0
+    starknet_testnet_tx_counter = 0
 
     while True:
-        counter += 1
+        starknet_testnet_tx_counter += 1
+        print(f"Starknet {network_type} Transaction no. {starknet_testnet_tx_counter} \n")
 
-        TransactionSTARK(wallet_address, rpc_endpoint, network_type, counter).main()
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type).check_balance()
 
+        print('\n')
+        time.sleep(3)
+
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type).check_block()
+
+        random_delay = random.randint(5, 60)
+
+        print(f"Waiting for {random_delay} seconds...")
+        print("=======================================================")
+
+        time.sleep(random_delay)
 
 
 def main():
@@ -194,15 +219,6 @@ def main():
         print("=======================================================")
     
     stark_mainnet_thread.join(), stark_testnet_thread.join()
-
-    # Start Axelar Mainnet Threads if RPC endpoint is provided
-    # if args.axelar_mainnet_rpc_endpoint:
-    #     axl_mainnet_thread = threading.Thread(target=axl_mainnet_threading, args=(args.axelar_mainnet_wallet_address, args.axelar_mainnet_rpc_endpoint))
-    #     axl_mainnet_thread.start()
-    #     time.sleep(1)
-    # else:
-    #     print("Please provide Axelar Mainnet RPC endpoint and wallet address")
-    #     print("=======================================================")
 
 if __name__ == "__main__":
     main()
