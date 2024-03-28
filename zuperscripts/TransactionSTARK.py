@@ -1,13 +1,12 @@
 import requests
-import random
-import time
+from TransactionERC import TransactionERC
 from starknet_py.net.full_node_client import FullNodeClient
 from starknet_py.net.models.chains import StarknetChainId
 from starknet_py.net.signer.stark_curve_signer import KeyPair
 from starknet_py.net.account.account import Account
 
-class TransactionSTARK:
-    def __init__(self, wallet_address, rpc_endpoint, network_type, counter):
+class TransactionSTARK(TransactionERC):
+    def __init__(self, wallet_address, rpc_endpoint, network_type):
 
         """
         Transaction class to interact with Starknet Mainnet and Testnet Blockchain
@@ -21,10 +20,8 @@ class TransactionSTARK:
             None
         """
 
-        self.wallet_address = wallet_address
-        self.rpc_endpoint = rpc_endpoint
+        super().__init__(wallet_address, rpc_endpoint)
         self.network_type = network_type
-        self.counter = counter
 
     def get_block(self):
 
@@ -68,8 +65,7 @@ class TransactionSTARK:
                 key_pair=KeyPair(12, 34),
                 chain=StarknetChainId.MAINNET,
             )
-
-        if self.network_type == "SEPOLIA_INTEGRATION":
+        elif self.network_type == "SEPOLIA_INTEGRATION":
             account = Account(
                 address=self.wallet_address,
                 client=FullNodeClient(node_url=self.rpc_endpoint),
@@ -81,10 +77,10 @@ class TransactionSTARK:
 
         return balance_wei
 
-    def main(self):
+    def check_balance(self):
 
         """
-        Check the transactions of the latest block, wait for a random time
+        Check the balance of the wallet address and print the balance
 
         Arguments:
             None
@@ -97,18 +93,27 @@ class TransactionSTARK:
             balance_wei = self.get_balance()
             balance_in_ether = balance_wei / 1e18
 
-            txs = self.get_block()
-
-            print(f"Starknet {self.network_type} Transaction no. {self.counter} \n")
             print(f'Wallet Address: {self.wallet_address}')
             print(f'Balance: {balance_in_ether} ETH')
-            print(f'Latest block: {txs} txs')
-            
-            random_delay = random.randint(30, 60)
-            
-            print(f"Waiting for {random_delay} seconds...")
-            print("=======================================================")
+        except Exception as e:
+            print("An error occurred:", e)
 
-            time.sleep(random_delay)
+    def check_block(self):
+
+        """
+        Check the transactions of the latest block
+
+        Arguments:
+            None
+
+        Returns:
+            None
+        """
+
+        try:
+            txs = self.get_block()
+
+            print(f'Wallet Address: {self.wallet_address}')
+            print(f'Latest block: {txs} txs')
         except Exception as e:
             print("An error occurred:", e)
