@@ -87,57 +87,49 @@ def near_testnet_threading(account_id, rpc_endpoint):
 
         time.sleep(random_delay)
 
-def stark_mainnet_threading(rpc_endpoint):
+def stark_mainnet_threading(wallet_address, rpc_endpoint, network_type):
 
     """
     Function to Define Starknet Transaction Thread Doing
 
     Arguments:
+        wallet_address (str): Wallet address that we will check the balance for
         rpc_endpoint (str): RPC endpoint
+        network_type (str): MAINNET, GOERLI, SEPOLIA or SEPOLIA_INTEGRATION
 
     Returns:
         None
     """
 
-    stark_mainnet_tx_counter = 0
+    counter = 0
 
     while True:
-        stark_mainnet_tx_counter += 1
-        print(f"Starknet Mainnet Transaction no. {stark_mainnet_tx_counter} \n")
+        counter += 1
 
-        TransactionSTARK(rpc_endpoint).check_txs()
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type, counter).main()
 
-        random_delay = random.randint(60, 90)
-        print(f"Waiting for {random_delay} seconds...")
-        print("=======================================================")
-
-        time.sleep(random_delay)
-
-def stark_testnet_threading(rpc_endpoint):
+def stark_testnet_threading(wallet_address, rpc_endpoint, network_type):
 
     """
     Function to Define Starknet Transaction Thread Doing
 
     Arguments:
+        wallet_address (str): Wallet address that we will check the balance for
         rpc_endpoint (str): RPC endpoint
+        network_type (str): MAINNET, GOERLI, SEPOLIA or SEPOLIA_INTEGRATION
 
     Returns:
         None
     """
 
-    stark_testnet_tx_counter = 0
+    counter = 0
 
     while True:
-        stark_testnet_tx_counter += 1
-        print(f"Starknet Testnet Transaction no. {stark_testnet_tx_counter} \n")
+        counter += 1
 
-        TransactionSTARK(rpc_endpoint).check_txs()
+        TransactionSTARK(wallet_address, rpc_endpoint, network_type, counter).main()
 
-        random_delay = random.randint(60, 90)
-        print(f"Waiting for {random_delay} seconds...")
-        print("=======================================================")
 
-        time.sleep(random_delay)
 
 def main():
     # Define Parser
@@ -151,7 +143,9 @@ def main():
     parser.add_argument('--near_testnet_rpc_endpoint', help='NEAR Testnet RPC endpoint')
     parser.add_argument('--near_testnet_account_id', help='NEAR Testnet account ID')
     parser.add_argument('--starknet_mainnet_rpc_endpoint', help='Starknet Mainnet RPC endpoint')
+    parser.add_argument('--starknet_mainnet_wallet_address', help='Starknet Mainnet wallet address')
     parser.add_argument('--starknet_testnet_rpc_endpoint', help='Starknet Testnet RPC endpoint')
+    parser.add_argument('--starknet_testnet_wallet_address', help='Starknet Testnet wallet address')
 
     # Parse Arguments
     args = parser.parse_args()
@@ -183,23 +177,32 @@ def main():
         print("Please provide NEAR Testnet RPC endpoint and account ID")
         print("=======================================================")
 
-    # Start Starknet Mainnet Threads if RPC endpoint is provided
-    if args.starknet_mainnet_rpc_endpoint:
-        stark_mainnet_thread = threading.Thread(target=stark_mainnet_threading, args=(args.starknet_mainnet_rpc_endpoint,))
+    # Start Starknet Mainnet Threads if RPC endpoint and wallet address are provided
+    if args.starknet_mainnet_rpc_endpoint and args.starknet_mainnet_wallet_address:
+        stark_mainnet_thread = threading.Thread(target=stark_mainnet_threading, args=(args.starknet_mainnet_wallet_address, args.starknet_mainnet_rpc_endpoint, "MAINNET"))
         stark_mainnet_thread.start()
-        time.sleep(1)
     else:
-        print("Please provide Starknet Mainnet RPC endpoint")
+        print("Please provide Starknet Mainnet RPC endpoint and wallet address")
         print("=======================================================")
 
-    # Start Starknet Testnet Threads if RPC endpoint is provided
-    if args.starknet_testnet_rpc_endpoint:
-        stark_testnet_thread = threading.Thread(target=stark_testnet_threading, args=(args.starknet_testnet_rpc_endpoint,))
+    # Start Starknet Testnet Threads if RPC endpoint and wallet address are provided
+    if args.starknet_testnet_rpc_endpoint and args.starknet_testnet_wallet_address:
+        stark_testnet_thread = threading.Thread(target=stark_testnet_threading, args=(args.starknet_testnet_wallet_address, args.starknet_testnet_rpc_endpoint, "SEPOLIA_INTEGRATION"))
         stark_testnet_thread.start()
-        time.sleep(1)
     else:
-        print("Please provide Starknet Testnet Starknet endpoint")
+        print("Please provide Starknet Testnet RPC endpoint and wallet address")
         print("=======================================================")
+    
+    stark_mainnet_thread.join(), stark_testnet_thread.join()
+
+    # Start Axelar Mainnet Threads if RPC endpoint is provided
+    # if args.axelar_mainnet_rpc_endpoint:
+    #     axl_mainnet_thread = threading.Thread(target=axl_mainnet_threading, args=(args.axelar_mainnet_wallet_address, args.axelar_mainnet_rpc_endpoint))
+    #     axl_mainnet_thread.start()
+    #     time.sleep(1)
+    # else:
+    #     print("Please provide Axelar Mainnet RPC endpoint and wallet address")
+    #     print("=======================================================")
 
 if __name__ == "__main__":
     main()
