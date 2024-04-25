@@ -129,7 +129,7 @@ def stark_testnet_threading(wallet_address, rpc_endpoint, network_type):
     Arguments:
         wallet_address (str): Wallet address that we will check the balance for
         rpc_endpoint (str): RPC endpoint
-        network_type (str): MAINNET, GOERLI, SEPOLIA or SEPOLIA_INTEGRATION
+        network_type (str): MAINNET, GOERLI, SEPOLIA_TESTNET or SEPOLIA_INTEGRATION
 
     Returns:
         None
